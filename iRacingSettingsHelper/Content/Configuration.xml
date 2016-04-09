@@ -1,0 +1,69 @@
+<configuration>
+  <actions role="Join">
+    <ini_files>
+      <ini_file path="%IRACING%\app.ini">
+        <sections>
+          <section name="Graphics">
+            <properties>
+              <property name="windowedHeight" value="1080" />
+              <property name="windowedWidth" value="5760" />
+              <property name="windowedXPos" value="-1928" />
+              <property name="windowedYPos" value="-31" />
+              <property name="windowedMaximized" value="0" />
+            </properties>
+          </section>
+          <section name="View">
+            <properties>
+              <property name="drivingCamFOV" value="150"/>
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+      <ini_file path="%IRACING%\renderer.ini">
+        <sections>
+          <section name="MonitorSetup">
+            <properties>
+              <property name="NumMonitors" value="3" />
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+    </ini_files>
+    <!--
+    <executables>
+      <executable path="C:\Program Files (x86)\iSpeed\iSpeed.exe" arguments="" wait="false"/>
+    </executables>
+    -->
+  </actions>
+  <actions role="Watch">
+    <ini_files>
+      <ini_file path="%IRACING%\app.ini">
+        <sections>
+          <section name="Graphics">
+            <properties>
+              <property name="windowedHeight" value="1080" />
+              <property name="windowedWidth" value="1920" />
+              <property name="windowedXPos" value="0" />
+              <property name="windowedYPos" value="0" />
+              <property name="windowedMaximized" value="1" />
+            </properties>
+          </section>
+          <section name="View">
+            <properties>
+              <property name="drivingCamFOV" value="78"/>
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+      <ini_file path="%IRACING%\renderer.ini">
+        <sections>
+          <section name="MonitorSetup">
+            <properties>
+              <property name="NumMonitors" value="1" />
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+    </ini_files>
+  </actions>
+</configuration>

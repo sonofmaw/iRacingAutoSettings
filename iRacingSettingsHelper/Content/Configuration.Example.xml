@@ -1,0 +1,69 @@
+<configurations>
+  <configuration role="Join">
+    <ini_files>
+      <ini_file path="C:\Users\Tim\Documents\iRacing\app.ini">
+        <sections>
+          <section name="Graphics">
+            <properties>
+              <property name="fullScreen" value="1" />
+              <property name="fullScreenHeight" value="1080" />
+              <property name="fullScreenWidth" value="5760" />
+            </properties>
+          </section>
+          <section name="View">
+            <properties>
+              <property name="drivingCamFOV" value="150"/>
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+      <ini_file path="C:\Users\Tim\Documents\iRacing\renderer.ini">
+        <sections>
+          <section name="MonitorSetup">
+            <properties>
+              <property name="NumMonitors" value="3" />
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+    </ini_files>
+    <executables>
+      <executable path="displayswitch" arguments="/external" wait="true" />
+    </executables>
+  </configuration>
+  <configuration role="Watch">
+    <ini_files>
+      <ini_file path="C:\Users\Tim\Documents\iRacing\app.ini">
+        <sections>
+          <section name="Graphics">
+            <properties>
+              <property name="fullScreen" value="0" />
+              <property name="windowedHeight" value="1080" />
+              <property name="windowedWidth" value="1920" />
+              <property name="windowedXPos" value="0" />
+              <property name="windowedYPos" value="0" />
+              <property name="windowedMaximized" value="1" />
+            </properties>
+          </section>
+          <section name="View">
+            <properties>
+              <property name="drivingCamFOV" value="78"/>
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+      <ini_file path="C:\Users\Tim\Documents\iRacing\renderer.ini">
+        <sections>
+          <section name="MonitorSetup">
+            <properties>
+              <property name="NumMonitors" value="1" />
+            </properties>
+          </section>
+        </sections>
+      </ini_file>
+    </ini_files>
+    <executables>
+      <executable path="displayswitch" arguments="/extend" wait="true" />
+    </executables>
+  </configuration>
+</configurations>
