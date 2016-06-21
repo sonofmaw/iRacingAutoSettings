@@ -3,7 +3,7 @@
 // @author			Tim Mawson
 // @namespace			http://userscripts.org/users/sonofmaw
 // @copyright			(c) 2014, 2016 Tim Mawson
-// @version			1.12
+// @version			1.13
 // @match			http://members.iracing.com/membersite/member/*
 // @exclude			http://members.iracing.com/membersite/member/EventResult*
 // @exclude			http://members.iracing.com/membersite/member/JoinedRace.do
@@ -40,6 +40,12 @@ function iRacingAutoSettings() {
     function createHookedLaunchSession(role, handler, argument) {
         return function() {
             requestSettingsChange(role);
+
+            // iRacing's control panel keeps resetting this to 10 seconds, causing an incorrect session is about to start warning in the sim,
+            // so we'll reset it to zero if we're about to run a simple test session.
+            if (argument == "testing") {
+                IRACING.control_panels.countdown_dt = 0;
+            }
 
             handler.call(IRACING.control_panels, argument);
         };
