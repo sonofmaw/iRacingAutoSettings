@@ -18,8 +18,11 @@ namespace iRacingSettingsServer
         public ServiceInstaller()
         {
             serviceInstaller = new System.ServiceProcess.ServiceInstaller();
+            serviceInstaller.AfterInstall += ServiceInstaller_AfterInstall;
+
             processInstaller =
               new System.ServiceProcess.ServiceProcessInstaller();
+
 
             serviceInstaller.Description = "iRacing Settings Server";
             serviceInstaller.DisplayName = "iRacing Settings Server";
@@ -32,6 +35,14 @@ namespace iRacingSettingsServer
 
             Installers.Add(serviceInstaller);
             Installers.Add(processInstaller);
+        }
+
+        private void ServiceInstaller_AfterInstall(object sender, InstallEventArgs e)
+        {
+            using (var sc = new System.ServiceProcess.ServiceController(serviceInstaller.ServiceName))
+            {
+                sc.Start();
+            }
         }
     }
 }

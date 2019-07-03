@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using System.Xml;
 
 namespace iRacingSettingsHelper
@@ -33,7 +32,7 @@ namespace iRacingSettingsHelper
 
         private static int UpdateSettings(string role)
         {
-            using (var log = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "iRacing Auto Settings", "Helper.log"), false))
+            using (StreamWriter log = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "iRacing Auto Settings", "Helper.log"), true))
             {
                 log.AutoFlush = true;
 
@@ -58,6 +57,8 @@ namespace iRacingSettingsHelper
                         log.WriteLine(string.Format("Could not find actions for role {0}.", role));
                         return 1;
                     }
+
+                    log.WriteLine(string.Format("Executing actions for role {0}.", role));
 
                     var iniFileNodes = actionNode.SelectNodes("ini_files/ini_file");
 

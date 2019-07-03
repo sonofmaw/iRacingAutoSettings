@@ -9,6 +9,7 @@ using System.ServiceProcess;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Management;
 
 namespace iRacingSettingsServer
 {
@@ -34,7 +35,9 @@ namespace iRacingSettingsServer
     {
         static EventLog Log;
         static HttpListener Listener;
- 
+        static ManagementEventWatcher ProcessStartWatcher;
+        static ManagementEventWatcher ProcessStopWatcher;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -48,6 +51,11 @@ namespace iRacingSettingsServer
         {
             try
             {
+                ProcessStartWatcher = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
+                ProcessStartWatcher.EventArrived += new EventArrivedEventHandler(ProcessStarted);
+                ProcessStopWatcher = new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
+                ProcessStopWatcher.EventArrived += new EventArrivedEventHandler(ProcessStopped);
+
                 Listener = new HttpListener();
 
                 Log = new EventLog();
@@ -89,6 +97,7 @@ namespace iRacingSettingsServer
             else
             {
                 UpdateSettings(role);
+                ListenForIRacingExit();
             }
 
             response.Headers.Add("Access-Control-Allow-Origin", "*");
@@ -105,6 +114,34 @@ namespace iRacingSettingsServer
             if (settingsHelper.WaitForExit() != 0)
             {
                 Log.WriteEntry("iRacing Settings Helper failed.", EventLogEntryType.Error);
+            }
+        }
+
+        private static void ListenForIRacingExit()
+        {
+            ProcessStartWatcher.Start();
+        }
+
+        private static void ProcessStarted(object o, EventArrivedEventArgs e)
+        {
+            if (e.NewEvent.Properties["ProcessName"].Value.ToString() == "iRacingSim64DX11.exe")
+            {
+                Log.WriteEntry("iRacing Started");
+
+                ProcessStartWatcher.Stop();
+                ProcessStopWatcher.Start();
+            }
+        }
+
+        private static void ProcessStopped(object o, EventArrivedEventArgs e)
+        { 
+            if (e.NewEvent.Properties["ProcessName"].Value.ToString() == "iRacingSim64DX11.exe")
+            {
+                Log.WriteEntry("iRacing Stopped");
+
+                ProcessStopWatcher.Stop();
+
+                UpdateSettings("Exit");
             }
         }
     }
